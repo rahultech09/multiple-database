@@ -14,12 +14,19 @@ default: &default
   encoding: utf8mb4
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
-  password:
+  password: password
   socket: /var/run/mysqld/mysqld.sock
+  timeout: 5000
 
 development:
+ primary:
   <<: *default
-  database: multiple_db_development
+  database: primary_database
+
+ secondary:
+  <<: *default
+  database: secondary
+  migrations_paths: db/secondary_migrate
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
